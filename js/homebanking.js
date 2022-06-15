@@ -25,14 +25,9 @@ function cambiarLimiteDeExtraccion() {
 function extraerDinero() {
     var saldoInterno = saldoCuenta;
     var saldoAExtraer = parseInt(prompt("Cuanto queres extraer"));
-    if (saldoAExtraer > saldoCuenta || saldoAExtraer > limiteExtraccion){
-        alert("Error")};
-    if (saldoAExtraer % 100 != 0){
-        alert("Sólo múltiplos de 100")
-    }
-    else {saldoCuenta -= saldoAExtraer;
-        actualizarSaldoEnPantalla();
-         }
+    if (saldoAExtraer <= saldoCuenta && saldoAExtraer <= limiteExtraccion && (saldoAExtraer % 100 != 0)){
+        modificarSaldo(saldoAExtraer,'extraccion')};
+    else alert("error");
 }
 
 function depositarDinero() {
