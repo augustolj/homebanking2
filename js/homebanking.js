@@ -5,6 +5,10 @@ var limiteExtraccion = 100;
 var servicioAgua = 100;
 var servicioLuz = 75;
 var servicioABL = 50;
+var cuentasAmigas = [
+    ['cuentaAmiga1' , 1234],
+    ['cuentaAmiga2' , 4321],
+];
 
 //Ejecución de las funciones que actualizan los valores de las variables en el HTML.
 window.onload = function() {
@@ -13,32 +17,30 @@ window.onload = function() {
     actualizarLimiteEnPantalla();
 }
 
-
 //Funciones que tenes que completar
 function cambiarLimiteDeExtraccion() {
     var consultaInternaLimite = limiteExtraccion;
-    var nuevoLimite = parseInt(prompt("Nuevo Limite Extraccion"));
+    var nuevoLimite = consultarMonto();
     limiteExtraccion = nuevoLimite;
     actualizarLimiteEnPantalla()
 }
 
 function extraerDinero() {
-    var saldoInterno = saldoCuenta;
-    var saldoAExtraer = parseInt(prompt("Cuanto queres extraer"));
-    if (saldoAExtraer <= saldoCuenta && saldoAExtraer <= limiteExtraccion && (saldoAExtraer % 100 != 0)){
-        modificarSaldo(saldoAExtraer,'extraccion')};
-    else alert("error");
+    var saldoAExtraer = consultarMonto();
+    if (saldoAExtraer <= saldoCuenta && saldoAExtraer <= limiteExtraccion){
+        if (saldoAExtraer % 100 === 0){
+            modificarSaldo(saldoAExtraer,'extraccion');
+        } else alert("error");
+    } else alert("error");
 }
 
 function depositarDinero() {
-    var depositoInterno = saldoCuenta;
-    var nuevoSaldo = parseInt(prompt("Monto a depositar"));
-    saldoCuenta += nuevoSaldo;
-    actualizarSaldoEnPantalla();
+    var nuevoSaldo = consultarMonto();
+    modificarSaldo(nuevoSaldo,"deposito");
 }
 
 function pagarServicio() {
-    var servicioAPagar = parseInt(prompt("Que servicio quieres pagar?\n1 Agua\n2 Luz\n3 ABL"));
+var servicioAPagar = parseInt(prompt("Que servicio quieres pagar?\n1 Agua\n2 Luz\n3 ABL"));
     switch (servicioAPagar){
         case 1:
             pagandoServicios(servicioAgua);
@@ -54,6 +56,20 @@ function pagarServicio() {
     }
 }
     
+function transferirDinero() {
+
+}
+
+function iniciarSesion() {
+
+}
+
+// Funciones funcionales
+function consultarMonto(){
+    var montoATrabajar = parseInt(prompt("Ingrese Monto"));
+    return montoATrabajar;
+}
+
 function pagandoServicios(servicioAPagar) {
     if (saldoCuenta < servicioAPagar) {
         alert("Sin Saldo");
@@ -72,14 +88,6 @@ function modificarSaldo(montoAModificar,tipoDeOperacion){
             alert("error")
     }
     actualizarSaldoEnPantalla()
-}
-    
-function transferirDinero() {
-
-}
-
-function iniciarSesion() {
-
 }
 
 //Funciones que actualizan el valor de las variables en el HTML
